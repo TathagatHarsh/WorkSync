@@ -25,11 +25,38 @@ app.post("/signup", async function (req, res) {
     name: z.string().min(3).max(30),
   });
 
+  // Log incoming request for debugging
+  console.log("Signup request body:", req.body);
+
   const parsed = schema.safeParse(req.body);
   if (!parsed.success) {
+    console.log("Validation errors:", parsed.error.issues);
+    const errorMessages = parsed.error.issues.map((err) => {
+      if (err.path[0] === "password") {
+        if (err.code === "too_small") {
+          return "Password must be at least 8 characters long";
+        }
+        if (err.code === "invalid_string") {
+          return "Password must include uppercase, lowercase, and special character";
+        }
+      }
+      if (err.path[0] === "name") {
+        if (err.code === "too_small") {
+          return "Name must be at least 3 characters long";
+        }
+        if (err.code === "too_big") {
+          return "Name must be less than 30 characters";
+        }
+      }
+      if (err.path[0] === "email") {
+        return "Please enter a valid email address";
+      }
+      return err.message;
+    });
+
     return res.status(400).json({
-      message: "Invalid input",
-      error: parsed.error.errors,
+      message: errorMessages.join(". "),
+      error: parsed.error.issues,
     });
   }
 
@@ -45,11 +72,15 @@ app.post("/signup", async function (req, res) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: { email, password: hashedPassword, name },
     });
 
-    res.status(201).json({ message: "Signup successful" });
+    const token = jwt.sign({ id: newUser.id }, privatekey, {
+      expiresIn: "1h",
+    });
+
+    res.status(201).json({ message: "Signup successful", token });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
