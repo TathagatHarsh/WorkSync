@@ -72,9 +72,11 @@ const LoginSignupForm = ({ onAuthSuccess = () => {} }) => {
 
       <div className="form-card">
         <div className="form-header">
-          <h1 className="form-logo">EduQuery</h1>
+          <h1 className="form-logo">WorkSync</h1>
           <p className="form-subtitle">
-            {isLogin ? "Welcome back!" : "Create your account"}
+            {isLogin
+              ? "Smart employee management made simple"
+              : "Create your WorkSync account"}
           </p>
         </div>
 
@@ -216,14 +218,14 @@ const LoginSignupForm = ({ onAuthSuccess = () => {} }) => {
         <p className="bottom-text">
           {isLogin ? (
             <>
-              Don't have an account?{" "}
+              Don't have a WorkSync account?{" "}
               <span className="toggle-link" onClick={() => setIsLogin(false)}>
                 Sign up
               </span>
             </>
           ) : (
             <>
-              Already have an account?{" "}
+              Already using WorkSync?{" "}
               <span className="toggle-link" onClick={() => setIsLogin(true)}>
                 Sign in
               </span>
