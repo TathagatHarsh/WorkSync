@@ -89,25 +89,31 @@
 }
 
 .form-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .form-logo {
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.75px;
+  text-transform: uppercase;
 }
 
 .form-subtitle {
-  font-size: 0.95rem;
-  color: #6b7280;
-  font-weight: 400;
+  font-size: 0.9rem;
+  color: #4b5563;
+  font-weight: 500;
   margin: 0;
+  line-height: 1.5;
+  max-width: 18rem;
 }
 
 .tab-buttons {
