@@ -11,6 +11,7 @@ const LoginSignupForm = ({ onAuthSuccess = () => {} }) => {
   });
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,176 +63,167 @@ const LoginSignupForm = ({ onAuthSuccess = () => {} }) => {
     }
   };
 
+  const toggleMode = () => {
+    setIsLogin(!isLogin);
+    setMessage("");
+    setMessageType("");
+    setFormData({ name: "", email: "", password: "" });
+  };
+
   return (
-    <div className="form-container">
-      <div className="background-decoration">
-        <div className="circle circle-1"></div>
-        <div className="circle circle-2"></div>
-        <div className="circle circle-3"></div>
-      </div>
-
-      <div className="form-card">
-        <div className="form-header">
-          <h1 className="form-logo">WorkSync</h1>
-          <p className="form-subtitle">
-            {isLogin
-              ? "Smart employee management made simple"
-              : "Create your WorkSync account"}
-          </p>
-        </div>
-
-        <div className="tab-buttons">
-          <button
-            className={`tab ${isLogin ? "active" : ""}`}
-            onClick={() => {
-              setIsLogin(true);
-              setMessage("");
-            }}
-          >
-            Login
-          </button>
-          <button
-            className={`tab ${!isLogin ? "active" : ""}`}
-            onClick={() => {
-              setIsLogin(false);
-              setMessage("");
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
-
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="input-group">
-            {!isLogin && (
-              <div className="input-wrapper">
-                <svg
-                  className="input-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
+    <div className="auth-container">
+      <div className="auth-wrapper">
+        {/* Left Side - Form */}
+        <div className={`auth-side form-side ${isLogin ? "login-mode" : "signup-mode"}`}>
+          <div className="form-content">
+            <div className="brand-header">
+              <div className="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  className="input-field"
-                  onChange={handleChange}
-                  value={formData.name}
-                  required
-                />
+              </div>
+              <h1>WorkSync</h1>
+            </div>
+
+            <div className="text-header">
+              <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
+              <p>{isLogin ? "Please enter your details to sign in" : "Start your journey with us today"}</p>
+            </div>
+
+            <form className="auth-form" onSubmit={handleSubmit}>
+              {!isLogin && (
+                <div className="input-group">
+                  <label>Full Name</label>
+                  <div className="input-wrapper">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="John Doe"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                    <span className="input-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="7" r="4" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <div className="input-group">
+                <label>Email Address</label>
+                <div className="input-wrapper">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="name@company.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span className="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M22 6l-10 7L2 6" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div className="input-group">
+                <label>Password</label>
+                <div className="input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 1l22 22" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="12" r="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {isLogin && (
+                <div className="form-actions">
+                  <label className="remember-me">
+                    <input type="checkbox" />
+                    <span>Remember me</span>
+                  </label>
+                  <a href="/forgotpassword">Forgot password?</a>
+                </div>
+              )}
+
+              <button type="submit" className="submit-btn">
+                {isLogin ? "Sign In" : "Create Account"}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+            </form>
+
+            {message && (
+              <div className={`message-alert ${messageType}`}>
+                {messageType === 'success' ? (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M22 4L12 14.01l-3-3" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 8v4M12 16h.01" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+                <span>{message}</span>
               </div>
             )}
 
-            <div className="input-wrapper">
-              <svg
-                className="input-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                className="input-field"
-                onChange={handleChange}
-                value={formData.email}
-                required
-              />
-            </div>
-
-            <div className="input-wrapper">
-              <svg
-                className="input-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="input-field"
-                onChange={handleChange}
-                value={formData.password}
-                required
-              />
+            <div className="auth-footer">
+              <p>
+                {isLogin ? "Don't have an account? " : "Already have an account? "}
+                <button onClick={toggleMode} className="toggle-btn">
+                  {isLogin ? "Sign up" : "Sign in"}
+                </button>
+              </p>
             </div>
           </div>
-
-          {isLogin && (
-            <a href="/forgotpassword" className="forgot-link">
-              Forgot password?
-            </a>
-          )}
-
-          <button type="submit" className="submit-btn">
-            <span>{isLogin ? "Login" : "Create Account"}</span>
-            <svg
-              className="btn-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </button>
-        </form>
-
-        {message && (
-          <div className={`message-alert ${messageType}`}>
-            <span>{message}</span>
-          </div>
-        )}
-
-        <div className="divider">
-          <span>or</span>
         </div>
 
-        <p className="bottom-text">
-          {isLogin ? (
-            <>
-              Don't have a WorkSync account?{" "}
-              <span className="toggle-link" onClick={() => setIsLogin(false)}>
-                Sign up
-              </span>
-            </>
-          ) : (
-            <>
-              Already using WorkSync?{" "}
-              <span className="toggle-link" onClick={() => setIsLogin(true)}>
-                Sign in
-              </span>
-            </>
-          )}
-        </p>
+        {/* Right Side - Decorative */}
+        <div className="auth-side decorative-side">
+          <div className="decorative-content">
+            <div className="floating-shapes">
+              <div className="shape shape-1"></div>
+              <div className="shape shape-2"></div>
+              <div className="shape shape-3"></div>
+            </div>
+            <div className="decorative-text">
+              <h2>Manage Your Workforce Efficiently</h2>
+              <p>Streamline your employee management process with our powerful tools and analytics.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
