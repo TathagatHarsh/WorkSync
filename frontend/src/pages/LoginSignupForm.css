@@ -249,6 +249,11 @@
   max-width: 400px;
 }
 
+.decorative-text {
+  position: relative;
+  z-index: 10;
+}
+
 .decorative-text h2 {
   font-size: 2rem;
   font-weight: 700;
