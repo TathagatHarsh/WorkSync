@@ -14,11 +14,18 @@ datasource db {
 }
 
 
+enum Role {
+  ADMIN
+  HR
+  EMPLOYEE
+}
+
 model User {
   id       Int     @id @default(autoincrement())
   email    String  @unique
   password String
   name     String
+  role     Role    @default(EMPLOYEE)
   todos    Todo[]
 }
 

@@ -1,0 +1,32 @@
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./Navbar.css";
+
+const Navbar = ({ onLogout }) => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <Link to="/">WorkSync</Link>
+      </div>
+      <div className="navbar-links">
+        {(role === "ADMIN" || role === "HR") && (
+          <Link to="/employees">Employees</Link>
+        )}
+        {role === "EMPLOYEE" && (
+          <>
+            <Link to="/my-profile">My Profile</Link>
+            <Link to="/attendance">Attendance</Link>
+          </>
+        )}
+        <button onClick={onLogout} className="logout-btn">
+          Logout
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

@@ -1,0 +1,46 @@
+.profile-container {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.profile-card h2 {
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.info-group {
+  margin-bottom: 1.5rem;
+}
+
+.info-group label {
+  display: block;
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.info-group p {
+  font-size: 1.125rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: #e6f7ff;
+  color: #1890ff;
+  border-radius: 999px;
+  font-size: 0.875rem !important;
+}
