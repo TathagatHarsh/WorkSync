@@ -48,9 +48,59 @@ const getEmployeeProfile = async (req, res) => {
     const { id } = req.user;
     const employee = await prisma.user.findUnique({
       where: { id },
-      select: { id: true, name: true, email: true, role: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        phoneNumber: true,
+        address: true,
+        department: true,
+        college: true,
+        joiningDate: true,
+        isProfileComplete: true,
+      },
     });
     res.json(employee);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const updateMyProfile = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { phoneNumber, address, department, college, joiningDate } = req.body;
+
+    // Check if all optional fields are present to set isProfileComplete
+    const isProfileComplete =
+      !!phoneNumber && !!address && !!department && !!college && !!joiningDate;
+
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: {
+        phoneNumber,
+        address,
+        department,
+        college,
+        joiningDate: joiningDate ? new Date(joiningDate) : undefined,
+        isProfileComplete,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        phoneNumber: true,
+        address: true,
+        department: true,
+        college: true,
+        joiningDate: true,
+        isProfileComplete: true,
+      },
+    });
+
+    res.json(updatedUser);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -122,4 +172,5 @@ module.exports = {
   createEmployee,
   updateEmployee,
   deleteEmployee,
+  updateMyProfile,
 };

@@ -21,12 +21,19 @@ enum Role {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  name     String
-  role     Role    @default(EMPLOYEE)
-  todos    Todo[]
+  id                Int          @id @default(autoincrement())
+  email             String       @unique
+  password          String
+  name              String
+  phoneNumber       String?
+  address           String?
+  department        String?
+  college           String?
+  joiningDate       DateTime?
+  isProfileComplete Boolean      @default(false)
+  role              Role         @default(EMPLOYEE)
+  todos             Todo[]
+  attendance        Attendance[]
 }
 
 model Todo {
@@ -35,4 +42,22 @@ model Todo {
   done    Boolean @default(false)
   userId  Int
   user    User    @relation(fields: [userId], references: [id])
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LEAVE
+}
+
+model Attendance {
+  id        Int              @id @default(autoincrement())
+  date      DateTime
+  status    AttendanceStatus @default(PRESENT)
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@unique([userId, date])
 }

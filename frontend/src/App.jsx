@@ -5,6 +5,8 @@ import "./App.css";
 import LoginSignupForm from "./pages/LoginSignupForm.jsx";
 import EmployeeList from "./pages/EmployeeList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile.jsx";
+import Attendance from "./pages/Attendance.jsx";
+import AttendanceManagement from "./pages/AttendanceManagement.jsx";
 import Unauthorized from "./pages/Unauthorized.jsx";
 import Navbar from "./components/Navbar.jsx";
 
@@ -100,10 +102,16 @@ function App() {
           path="/attendance"
           element={
             <RoleBasedRoute allowedRoles={["EMPLOYEE"]}>
-              <div style={{ padding: "2rem", textAlign: "center" }}>
-                <h2>Attendance Page</h2>
-                <p>Coming Soon...</p>
-              </div>
+              <Attendance />
+            </RoleBasedRoute>
+          }
+        />
+
+        <Route
+          path="/attendance-management"
+          element={
+            <RoleBasedRoute allowedRoles={["ADMIN", "HR"]}>
+              <AttendanceManagement />
             </RoleBasedRoute>
           }
         />
