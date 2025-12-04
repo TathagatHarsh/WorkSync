@@ -5,6 +5,22 @@
   font-family: 'Inter', sans-serif;
 }
 
+.run-daily-btn {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #52c41a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.run-daily-btn:hover {
+  background-color: #389e0d;
+}
+
 .header-section {
   margin-bottom: 2rem;
 }

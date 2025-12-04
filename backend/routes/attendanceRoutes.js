@@ -4,6 +4,7 @@ const {
   getAllAttendance,
   updateAttendance,
   markAttendance,
+  runDailyAttendance,
 } = require("../controllers/attendanceController");
 const { authenticate, authorizeRoles } = require("../middleware/authMiddleware");
 
@@ -12,6 +13,7 @@ const router = express.Router();
 router.get("/me", authenticate, getMyAttendance);
 router.get("/", authenticate, authorizeRoles("ADMIN", "HR"), getAllAttendance);
 router.post("/", authenticate, authorizeRoles("ADMIN", "HR"), markAttendance);
+router.post("/run-daily", authenticate, authorizeRoles("ADMIN", "HR"), runDailyAttendance);
 router.put("/:id", authenticate, authorizeRoles("ADMIN", "HR"), updateAttendance);
 
 module.exports = router;

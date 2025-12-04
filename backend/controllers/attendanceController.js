@@ -78,8 +78,15 @@ const markAttendance = async (req, res) => {
       return res.status(403).json({ message: "HR cannot mark attendance for other HRs or Admins" });
     }
 
-    const newAttendance = await prisma.attendance.create({
-      data: {
+    const newAttendance = await prisma.attendance.upsert({
+      where: {
+        userId_date: {
+          userId: parseInt(userId),
+          date: new Date(date),
+        },
+      },
+      update: { status },
+      create: {
         userId: parseInt(userId),
         date: new Date(date),
         status,
@@ -92,9 +99,46 @@ const markAttendance = async (req, res) => {
   }
 };
 
+const { startAttendanceCron } = require("../cron/attendanceCron");
+
+const runDailyAttendance = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: { id: true },
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let count = 0;
+    for (const user of users) {
+      const record = await prisma.attendance.upsert({
+        where: {
+          userId_date: {
+            userId: user.id,
+            date: today,
+          },
+        },
+        update: {}, // Do nothing if exists
+        create: {
+          userId: user.id,
+          date: today,
+          status: "ABSENT",
+        },
+      });
+      if (record) count++;
+    }
+
+    res.json({ message: `Daily attendance check completed. Processed ${count} users.` });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 module.exports = {
   getMyAttendance,
   getAllAttendance,
   updateAttendance,
   markAttendance,
+  runDailyAttendance,
 };

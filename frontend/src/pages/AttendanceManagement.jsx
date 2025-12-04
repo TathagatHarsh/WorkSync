@@ -60,6 +60,20 @@ const AttendanceManagement = () => {
     }
   };
 
+  const handleRunDaily = async () => {
+    try {
+      setLoading(true);
+      const res = await api.post("/api/attendance/run-daily");
+      alert(res.data.message);
+      fetchData(); // Refresh list
+    } catch (err) {
+      alert("Failed to run daily attendance check");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleMarkAttendance = async (e) => {
     e.preventDefault();
     if (!selectedUser || !markDate) {
@@ -107,6 +121,9 @@ const AttendanceManagement = () => {
       <div className="header-section">
         <h2>Attendance Management</h2>
         <p className="subtitle">Manage employee attendance records</p>
+        <button onClick={handleRunDaily} className="run-daily-btn">
+          Run Daily Attendance Check
+        </button>
       </div>
 
       {/* Mark Attendance Section */}

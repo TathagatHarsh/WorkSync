@@ -7,6 +7,7 @@ import EmployeeList from "./pages/EmployeeList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile.jsx";
 import Attendance from "./pages/Attendance.jsx";
 import AttendanceManagement from "./pages/AttendanceManagement.jsx";
+import TodoList from "./pages/TodoList.jsx";
 import Unauthorized from "./pages/Unauthorized.jsx";
 import Navbar from "./components/Navbar.jsx";
 
@@ -112,6 +113,15 @@ function App() {
           element={
             <RoleBasedRoute allowedRoles={["ADMIN", "HR"]}>
               <AttendanceManagement />
+            </RoleBasedRoute>
+          }
+        />
+
+        <Route
+          path="/todo"
+          element={
+            <RoleBasedRoute allowedRoles={["ADMIN", "HR", "EMPLOYEE"]}>
+              <TodoList />
             </RoleBasedRoute>
           }
         />

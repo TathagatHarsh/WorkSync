@@ -24,6 +24,7 @@ const Navbar = ({ onLogout }) => {
             <Link to="/attendance">Attendance</Link>
           </>
         )}
+        <Link to="/todo">To-Do List</Link>
         <button onClick={onLogout} className="logout-btn">
           Logout
         </button>

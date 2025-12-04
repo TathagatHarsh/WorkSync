@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Todo" ADD COLUMN     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "description" TEXT;

@@ -5,6 +5,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 const { startAttendanceCron } = require("./cron/attendanceCron");
 
@@ -18,5 +19,6 @@ startAttendanceCron();
 app.use("/", authRoutes);
 app.use("/api/employees", employeeRoutes);
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.listen(3000, () => console.log("🚀 Server running on port 3000"));
