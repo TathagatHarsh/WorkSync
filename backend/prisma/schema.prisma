@@ -53,7 +53,7 @@ enum AttendanceStatus {
 model Attendance {
   id        Int              @id @default(autoincrement())
   date      DateTime
-  status    AttendanceStatus @default(PRESENT)
+  status    AttendanceStatus @default(ABSENT)
   userId    Int
   user      User             @relation(fields: [userId], references: [id])
   createdAt DateTime         @default(now())
