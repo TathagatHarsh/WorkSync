@@ -9,13 +9,14 @@ const Navbar = ({ onLogout }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/">WorkSync</Link>
+        <Link to="/dashboard">WorkSync</Link>
       </div>
       <div className="navbar-links">
         {(role === "ADMIN" || role === "HR") && (
           <>
             <Link to="/employees">Employees</Link>
-            <Link to="/attendance-management">Attendance</Link>
+            <Link to="/attendance-management">Manage Attendance</Link>
+            {role === "HR" && <Link to="/attendance">My Attendance</Link>}
           </>
         )}
         {role === "EMPLOYEE" && (

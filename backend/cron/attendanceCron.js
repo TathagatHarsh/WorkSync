@@ -10,8 +10,9 @@ const startAttendanceCron = () => {
         select: { id: true },
       });
 
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const now = new Date();
+      // Use UTC midnight
+      const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
 
       for (const user of users) {
         await prisma.attendance.upsert({

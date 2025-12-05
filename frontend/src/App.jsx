@@ -8,6 +8,7 @@ import EmployeeProfile from "./pages/EmployeeProfile.jsx";
 import Attendance from "./pages/Attendance.jsx";
 import AttendanceManagement from "./pages/AttendanceManagement.jsx";
 import TodoList from "./pages/TodoList.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import Unauthorized from "./pages/Unauthorized.jsx";
 import Navbar from "./components/Navbar.jsx";
 
@@ -47,9 +48,9 @@ function App() {
         setRole(userRole);
 
         if (userRole === "ADMIN" || userRole === "HR") {
-          navigate("/employees", { replace: true });
+          navigate("/dashboard", { replace: true });
         } else {
-          navigate("/my-profile", { replace: true });
+          navigate("/dashboard", { replace: true });
         }
       } catch (e) {
         console.error("Failed to fetch user role", e);
@@ -74,13 +75,22 @@ function App() {
           path="/"
           element={
             token ? (
-              <Navigate to={role === "EMPLOYEE" ? "/my-profile" : "/employees"} replace />
+              <Navigate to="/dashboard" replace />
             ) : (
               <LoginSignupForm onAuthSuccess={handleAuthSuccess} />
             )
           }
         />
         
+        <Route
+          path="/dashboard"
+          element={
+            <RoleBasedRoute allowedRoles={["ADMIN", "HR", "EMPLOYEE"]}>
+              <Dashboard />
+            </RoleBasedRoute>
+          }
+        />
+
         <Route
           path="/employees"
           element={
@@ -102,7 +112,7 @@ function App() {
         <Route
           path="/attendance"
           element={
-            <RoleBasedRoute allowedRoles={["EMPLOYEE"]}>
+            <RoleBasedRoute allowedRoles={["EMPLOYEE", "HR"]}>
               <Attendance />
             </RoleBasedRoute>
           }

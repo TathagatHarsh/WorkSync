@@ -166,6 +166,19 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
+const getEmployeeCount = async (req, res) => {
+  try {
+    const count = await prisma.user.count({
+      where: {
+        role: { not: "ADMIN" }, // Count all non-admins as employees
+      },
+    });
+    res.json({ count });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 module.exports = {
   getAllEmployees,
   getEmployeeProfile,
@@ -173,4 +186,5 @@ module.exports = {
   updateEmployee,
   deleteEmployee,
   updateMyProfile,
+  getEmployeeCount,
 };

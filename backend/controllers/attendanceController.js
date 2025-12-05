@@ -107,8 +107,9 @@ const runDailyAttendance = async (req, res) => {
       select: { id: true },
     });
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use UTC midnight to match manual marking
+    const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
 
     let count = 0;
     for (const user of users) {
@@ -135,10 +136,50 @@ const runDailyAttendance = async (req, res) => {
   }
 };
 
+const getTodayAttendance = async (req, res) => {
+  try {
+    const { id } = req.user;
+    let today;
+
+    console.log("--- getTodayAttendance Debug ---");
+    console.log("User ID:", id);
+    console.log("Query Date:", req.query.date);
+
+    if (req.query.date) {
+      // If date is provided (YYYY-MM-DD), new Date(date) creates UTC midnight
+      today = new Date(req.query.date);
+    } else {
+      // Fallback to current UTC midnight
+      const now = new Date();
+      today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    }
+
+    console.log("Parsed Date (UTC):", today.toISOString());
+
+    const attendance = await prisma.attendance.findUnique({
+      where: {
+        userId_date: {
+          userId: id,
+          date: today,
+        },
+      },
+    });
+
+    console.log("Found Attendance:", attendance);
+    console.log("--------------------------------");
+
+    res.json(attendance || { status: "Not Marked" });
+  } catch (error) {
+    console.error("Error in getTodayAttendance:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 module.exports = {
   getMyAttendance,
   getAllAttendance,
   updateAttendance,
   markAttendance,
   runDailyAttendance,
+  getTodayAttendance,
 };
