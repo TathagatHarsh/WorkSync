@@ -36,7 +36,7 @@ function App() {
   const handleAuthSuccess = async (newToken) => {
     if (newToken) {
       localStorage.setItem("token", newToken);
-      setToken(newToken);
+      // Do not setToken state yet to avoid triggering re-render of App/Routes
       
       try {
         // Fetch user profile to get role
@@ -45,7 +45,10 @@ function App() {
         });
         const userRole = res.data.role;
         localStorage.setItem("role", userRole);
+        
+        // Now update state in correct order
         setRole(userRole);
+        setToken(newToken); 
 
         if (userRole === "ADMIN" || userRole === "HR") {
           navigate("/dashboard", { replace: true });
