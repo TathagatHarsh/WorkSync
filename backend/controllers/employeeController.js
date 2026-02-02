@@ -155,10 +155,13 @@ const updateEmployee = async (req, res) => {
 const deleteEmployee = async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = parseInt(id);
 
-    await prisma.user.delete({
-      where: { id: parseInt(id) },
-    });
+    await prisma.$transaction([
+      prisma.attendance.deleteMany({ where: { userId } }),
+      prisma.todo.deleteMany({ where: { userId } }),
+      prisma.user.delete({ where: { id: userId } }),
+    ]);
 
     res.json({ message: "Employee deleted successfully" });
   } catch (error) {
