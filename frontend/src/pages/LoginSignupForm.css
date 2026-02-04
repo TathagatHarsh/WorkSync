@@ -541,3 +541,124 @@
     padding: 32px 24px;
   }
 }
+
+/* Add these styles to the end of LoginSignupForm.css */
+
+.demo-access-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.demo-access-panel h3 {
+  color: white;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.demo-access-panel p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.demo-role-card {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.demo-role-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.role-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.role-icon.admin {
+  background: linear-gradient(135deg, #FF6B6B, #EE5253);
+  color: white;
+}
+
+.role-icon.hr {
+  background: linear-gradient(135deg, #4834D4, #686DE0);
+  color: white;
+}
+
+.role-icon.employee {
+  background: linear-gradient(135deg, #6AB04C, #BADC58);
+  color: white;
+}
+
+.role-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.role-title {
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.role-email {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+.autofill-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  pointer-events: none; /* Let the parent click handle it */
+}
+
+/* Adjust decorative side layout */
+.decorative-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+/* Hide floating shapes if they interfere, or adjust their z-index */
+.floating-shapes {
+  z-index: 0;
+}
+
+.demo-access-panel, .decorative-text {
+  z-index: 1;
+  position: relative;
+}

@@ -213,11 +213,47 @@ const LoginSignupForm = ({ onAuthSuccess = () => {} }) => {
         {/* Right Side - Decorative */}
         <div className="auth-side decorative-side">
           <div className="decorative-content">
-            <div className="floating-shapes">
-              <div className="shape shape-1"></div>
-              <div className="shape shape-2"></div>
-              <div className="shape shape-3"></div>
+            <div className="demo-access-panel">
+              <h3>Demo Access</h3>
+              <p>Click to auto-fill credentials:</p>
+              
+              <div className="demo-role-card" onClick={() => {
+                setIsLogin(true);
+                setFormData({ ...formData, email: "admin@demo.com", password: "Admin123!" });
+              }}>
+                <div className="role-icon admin">A</div>
+                <div className="role-info">
+                  <span className="role-title">Admin</span>
+                  <span className="role-email">admin@demo.com</span>
+                </div>
+                <button className="autofill-btn">Auto-fill</button>
+              </div>
+
+              <div className="demo-role-card" onClick={() => {
+                setIsLogin(true);
+                setFormData({ ...formData, email: "hr@demo.com", password: "Hr123!" });
+              }}>
+                <div className="role-icon hr">H</div>
+                <div className="role-info">
+                  <span className="role-title">HR Manager</span>
+                  <span className="role-email">hr@demo.com</span>
+                </div>
+                <button className="autofill-btn">Auto-fill</button>
+              </div>
+
+              <div className="demo-role-card" onClick={() => {
+                setIsLogin(true);
+                setFormData({ ...formData, email: "employee@demo.com", password: "Employee123!" });
+              }}>
+                <div className="role-icon employee">E</div>
+                <div className="role-info">
+                  <span className="role-title">Employee</span>
+                  <span className="role-email">employee@demo.com</span>
+                </div>
+                <button className="autofill-btn">Auto-fill</button>
+              </div>
             </div>
+            
             <div className="decorative-text">
               <h2>Manage Your Workforce Efficiently</h2>
               <p>Streamline your employee management process with our powerful tools and analytics.</p>
