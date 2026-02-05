@@ -34,6 +34,10 @@ model User {
   role              Role         @default(EMPLOYEE)
   todos             Todo[]
   attendance        Attendance[]
+  leaves            LeaveRequest[]
+  notices           Notice[]
+  salary            SalaryStructure?
+  payroll           PayrollRecord[]
 }
 
 model Todo {
@@ -62,4 +66,68 @@ model Attendance {
   updatedAt DateTime         @updatedAt
 
   @@unique([userId, date])
+}
+
+enum LeaveType {
+  SICK
+  CASUAL
+  ANNUAL
+  OTHER
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model LeaveRequest {
+  id        Int         @id @default(autoincrement())
+  startDate DateTime
+  endDate   DateTime
+  reason    String
+  type      LeaveType
+  status    LeaveStatus @default(PENDING)
+  userId    Int
+  user      User        @relation(fields: [userId], references: [id])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+enum NoticeCategory {
+  GENERAL
+  URGENT
+  EVENT
+}
+
+model Notice {
+  id        Int            @id @default(autoincrement())
+  title     String
+  content   String
+  category  NoticeCategory @default(GENERAL)
+  date      DateTime       @default(now())
+  postedBy  Int
+  author    User           @relation(fields: [postedBy], references: [id])
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model SalaryStructure {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @unique
+  user         User     @relation(fields: [userId], references: [id])
+  basicSalary  Float
+  allowances   Float    @default(0)
+  deductions   Float    @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model PayrollRecord {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  month       String   // Format: "YYYY-MM"
+  totalPaid   Float
+  generatedAt DateTime @default(now())
 }

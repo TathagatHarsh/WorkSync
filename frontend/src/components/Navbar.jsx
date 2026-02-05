@@ -16,6 +16,8 @@ const Navbar = ({ onLogout }) => {
           <>
             <Link to="/employees">Employees</Link>
             <Link to="/attendance-management">Manage Attendance</Link>
+            <Link to="/leave-dashboard">Manage Leaves</Link>
+            <Link to="/payroll">Payroll</Link>
             {role === "HR" && <Link to="/attendance">My Attendance</Link>}
           </>
         )}
@@ -23,6 +25,8 @@ const Navbar = ({ onLogout }) => {
           <>
             <Link to="/my-profile">My Profile</Link>
             <Link to="/attendance">Attendance</Link>
+            <Link to="/leave-request">Request Leave</Link>
+            <Link to="/payroll">My Pay</Link>
           </>
         )}
         <Link to="/todo">To-Do List</Link>

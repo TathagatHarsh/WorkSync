@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import api from "./api/axiosConfig";
-import "./App.css";
+
 import LoginSignupForm from "./pages/LoginSignupForm.jsx";
 import EmployeeList from "./pages/EmployeeList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile.jsx";
@@ -11,6 +11,9 @@ import TodoList from "./pages/TodoList.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Unauthorized from "./pages/Unauthorized.jsx";
 import Navbar from "./components/Navbar.jsx";
+import LeaveDashboard from "./pages/LeaveDashboard.jsx";
+import LeaveRequest from "./pages/LeaveRequest.jsx";
+import PayrollPage from "./pages/PayrollPage.jsx";
 
 const RoleBasedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem("token");
@@ -135,6 +138,33 @@ function App() {
           element={
             <RoleBasedRoute allowedRoles={["ADMIN", "HR", "EMPLOYEE"]}>
               <TodoList />
+            </RoleBasedRoute>
+          }
+        />
+
+        <Route
+          path="/leave-dashboard"
+          element={
+            <RoleBasedRoute allowedRoles={["ADMIN", "HR"]}>
+              <LeaveDashboard />
+            </RoleBasedRoute>
+          }
+        />
+
+        <Route
+          path="/leave-request"
+          element={
+            <RoleBasedRoute allowedRoles={["EMPLOYEE"]}>
+              <LeaveRequest />
+            </RoleBasedRoute>
+          }
+        />
+
+        <Route
+          path="/payroll"
+          element={
+            <RoleBasedRoute allowedRoles={["ADMIN", "HR", "EMPLOYEE"]}>
+              <PayrollPage />
             </RoleBasedRoute>
           }
         />

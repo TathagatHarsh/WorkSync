@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axiosConfig";
 import "./Dashboard.css";
+import NoticeBoard from "../components/NoticeBoard";
 
 // Icons
 const ProfileIcon = () => (
@@ -109,6 +110,11 @@ const Dashboard = () => {
           </p>
         </div>
       </header>
+      
+      {/* Notice Board Section */}
+      <div className="dashboard-section" style={{ marginBottom: "2rem" }}>
+        <NoticeBoard />
+      </div>
 
       <div className="dashboard-grid">
         {/* --- EMPLOYEE & HR VIEW (Personal Attendance) --- */}
